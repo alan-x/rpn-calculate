@@ -1,0 +1,16 @@
+{
+  "name": "rpn-calculate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "test": "jest",
+    "build": "jest&&webpack-cli --mode=production"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "webpack": "^4.20.2"
+  }
+}

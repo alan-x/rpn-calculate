@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>波兰计算器</title>
+    <script src="./../dist/bundle.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        button {
+            width: 80px;
+            outline: none !important;
+
+        }
+
+        :focus {
+            outline: none !important;
+        }
+
+        #result {
+            line-height: 80px;
+            min-height: 100px;
+            font-size: 40px;
+            background: #eeeeee;
+            border-radius: 5px;
+            padding: 10px;
+            word-wrap: break-word;
+        }
+
+        .wrap {
+            margin-top: 20px;
+            width: 420px;
+            border: 1px solid #eee;
+            padding: 20px;
+        }
+
+        .button-row {
+            height: 60px
+        }
+
+        .button-wrap {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="container">
+<div class="wrap">
+    <p>波兰计算器</p>
+    <p id="result"></p>
+    <div class="button-wrap">
+        <div class="button-row">
+            <button id="clr" class="btn btn-danger">清理</button>
+            <button id="back" class="btn btn-warning">回退</button>
+            <button id="cal" class="btn btn-info">=</button>
+            <button class="btn btn-primary">.</button>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary">1</button>
+            <button class="btn btn-primary">2</button>
+            <button class="btn btn-primary">3</button>
+            <button class="btn btn-primary">+</button>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary">4</button>
+            <button class="btn btn-primary">5</button>
+            <button class="btn btn-primary">6</button>
+            <button class="btn btn-primary">-</button>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary">7</button>
+            <button class="btn btn-primary">8</button>
+            <button class="btn btn-primary">9</button>
+            <button class="btn btn-primary">*</button>
+        </div>
+        <div class="button-row">
+            <button class="btn btn-primary">(</button>
+            <button class="btn btn-primary">0</button>
+            <button class="btn btn-primary">)</button>
+            <button class="btn btn-primary">/</button>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var resultContent = document.getElementById('result')
+    var result = ''
+    window.addEventListener('click', function (e) {
+        var target = e.target
+        var value = target.innerText
+        if (target.tagName !== 'BUTTON') return
+        switch (target.id) {
+            // [0-9+-*/()]
+            case '': {
+                // 防止第一次按的是 +-*/0.
+                if (result === '' && '+-*/0.'.indexOf(target.innerText) !== -1) break
+                result += target.innerText
+                resultContent.innerText = result
+                break
+            }
+            // 计算 =
+            case 'cal': {
+                // 如果本来就是空的那就没有啥意思了
+                if (result === '') break
+
+                result += target.innerText + directCalculate(resultContent.innerText)
+                resultContent.innerText = result
+                // 计算完了之后清空, 防止多次按=
+                result = ''
+                break
+            }
+            // 清除
+            case 'clr': {
+                result = ''
+                resultContent.innerText = result
+                break
+            }
+            // 回退
+            case 'back': {
+                if (result.length !== 0) {
+                    result = result.substr(resultContent.innerText.length, 1)
+                }
+                resultContent.innerText = result
+                break
+            }
+            default: {
+                throw 'not found this button type' + target.id
+            }
+        }
+
+    })
+</script>
+</html>
