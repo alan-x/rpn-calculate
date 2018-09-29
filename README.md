@@ -36,4 +36,6 @@ directCalculate('(1+2)*(3+4)') // 21
         ```javascript
             calculate('1+2') //3
         ```
+### 效果
+ ![rpn](https://github.com/followWinter/rpn-calculate/raw/master/res/rpn.jpg)
 
