@@ -16,10 +16,12 @@ const syntax = {
         type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_LEFT_BRACKET]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_RIGHT_BRACKET]: [
-        type.TYPE_OPERATION
+        type.TYPE_OPERATION,
+        type.TYPE_RIGHT_BRACKET
     ]
 }
 
@@ -42,12 +44,27 @@ function syntaxCheckWithText(text = '') {
 
     var pre = type.TYPE_EMPTY, next = getType(text.pop())
 
+    var bracketNum = 0
 
     while (text.length >= 0) {
+
+        {
+            if (next === type.TYPE_LEFT_BRACKET) {
+                ++bracketNum
+            } else if (next === type.TYPE_RIGHT_BRACKET) {
+                --bracketNum
+            }
+
+            if (bracketNum < 0) {
+                throw `syntax error: num of ')' could no more than '('`
+            }
+        }
         syntaxCheck(pre, next)
         if (text.length === 0) break
         pre = next
         next = getType(text.pop())
+
+
     }
 
     return true

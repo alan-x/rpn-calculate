@@ -92,7 +92,19 @@ describe('syntax check wit text', () => {
         try {
             syntaxCheckWithText(')-')
         } catch (e) {
-            expect(e).toBe(`syntax error: '' -> ')'`)
+            expect(e).toBe(`syntax error: num of ')' could no more than '('`)
+        }
+    })
+    test('((', () => {
+        expect(syntaxCheckWithText('((')).toBeTruthy()
+
+    })
+    test('(1+2))', () => {
+
+        try {
+            syntaxCheckWithText('(1+2))')
+        } catch (e) {
+            expect(e).toBe(`syntax error: num of ')' could no more than '('`)
         }
     })
 })

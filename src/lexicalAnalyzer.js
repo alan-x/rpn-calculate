@@ -9,6 +9,8 @@ function lexicalAnalyzer(input) {
     var preValue = ''
     var preType = type.TYPE_EMPTY
 
+    var bracketNum = 0
+
     while (input.length) {
         let morpheme = input.pop()
         switch (morpheme) {
@@ -79,6 +81,7 @@ function lexicalAnalyzer(input) {
                 break
             }
             case '(': {
+
                 {
                     syntaxCheck(preType, type.TYPE_LEFT_BRACKET)
                 }
@@ -91,11 +94,20 @@ function lexicalAnalyzer(input) {
 
                 preType = type.TYPE_LEFT_BRACKET
                 preValue = morpheme
+                {
+                    ++bracketNum
+                }
                 break
             }
             case ')': {
                 {
                     syntaxCheck(preType, type.TYPE_RIGHT_BRACKET)
+                }
+                {
+                    --bracketNum
+                    if (bracketNum < 0) {
+                        throw `syntax error: num of ')' could no more than '('`
+                    }
                 }
 
                 if (preType !== type.TYPE_EMPTY) {

@@ -42,5 +42,12 @@ describe('lexical analyze', () => {
 
         }
     })
+    test('(1+2))', () => {
+        try{
+            analyzer('(1+2))')
+        }catch (e) {
+            expect(e).toBe(`syntax error: num of ')' could no more than '('`)
+        }
+    })
 
 })
