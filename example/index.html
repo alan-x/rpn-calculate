@@ -27,6 +27,8 @@
         }
 
         .wrap {
+            min-width: 40%;
+            float: left;
             margin-top: 20px;
             width: 420px;
             border: 1px solid #eee;
@@ -40,6 +42,12 @@
         .button-wrap {
             margin-top: 30px;
             text-align: center;
+        }
+
+        #action {
+            min-width: 40%;
+            margin-top: 50px;
+            float: right;
         }
     </style>
 </head>
@@ -78,12 +86,31 @@
             <button class="btn btn-primary">)</button>
             <button class="btn btn-primary">/</button>
         </div>
+
     </div>
+
+</div>
+<div id="action">
+    <h5>动作</h5>
 </div>
 </body>
 <script>
     var resultContent = document.getElementById('result')
     var result = ''
+    var actionContent = document.getElementById('action')
+
+    function appendAction(action) {
+        var p = document.createElement('p')
+        p.append(action)
+        actionContent.append(p)
+    }
+
+    function clearAction() {
+        actionContent.childNodes.forEach((child, index) => {
+            child.remove()
+        })
+    }
+
     window.addEventListener('click', function (e) {
         var target = e.target
         var value = target.innerText
@@ -93,14 +120,23 @@
             case '': {
                 // 防止第一次按的是 +-*/0.
                 if (result === '' && '+-*/0.'.indexOf(target.innerText) !== -1) break
-                result += target.innerText
-                resultContent.innerText = result
+                try {
+                    syntaxCheckWithText(result + value)
+                    result += target.innerText
+                    resultContent.innerText = result
+                    appendAction(`你点击了: ${value}`)
+                } catch (e) {
+                    appendAction(`你点击了: ${value}, 但是语法错误: ${e}`)
+
+                }
+
                 break
             }
             // 计算 =
             case 'cal': {
                 // 如果本来就是空的那就没有啥意思了
                 if (result === '') break
+                appendAction(`你点击了: =`)
 
                 result += target.innerText + directCalculate(resultContent.innerText)
                 resultContent.innerText = result
@@ -110,14 +146,18 @@
             }
             // 清除
             case 'clr': {
+                appendAction(`你点击了: 清除`)
+                clearAction()
                 result = ''
                 resultContent.innerText = result
                 break
             }
             // 回退
             case 'back': {
+                appendAction(`你点击了: 回退`)
+
                 if (result.length !== 0) {
-                    result = result.substr(resultContent.innerText.length, 1)
+                    result = result.substr(0, result.length - 1)
                 }
                 resultContent.innerText = result
                 break

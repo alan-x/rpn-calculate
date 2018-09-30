@@ -1,40 +1,11 @@
-const type = require('./type')
-
-
-function sliceToArr(input) {
-    return input.match(/([0-9|\.]+)|([\+\-\*\/])|(\()|(\))/g).reverse()
-}
-
-
-function getType(token) {
-    if (token.match(/[0-9|\.]/g)) return type.TYPE_NUMBER
-    if (token.match(/[\+\-\*\/]/g)) return type.TYPE_OPERATION
-    if (token.match(/\(/)) return type.TYPE_LEFT_BRACKET
-    if (token.match(/\)/)) return type.TYPE_RIGHT_BRACKET
-    throw "not found this type: " + token
-}
-
-
-function tokenizer(input) {
-    var tokenList = sliceToArr(input)
-    var newTokenList = []
-
-    tokenList.forEach((token) => {
-        var type = getType(token)
-        newTokenList.push({
-            type: type,
-            value: isNaN(+token)?token:+token
-        })
-    })
-
-    return newTokenList
-}
+const type = require('./type').type
+const lexicalAnalyzer = require('./lexicalAnalyzer').lexicalAnalyzer
 
 function parse(input) {
     var result = []
     var operation = []
 
-    var tokenList = tokenizer(input)
+    var tokenList = lexicalAnalyzer(input).reverse()
 
     while (tokenList.length) {
         let token = tokenList.pop()
@@ -74,7 +45,5 @@ function parse(input) {
 
 
 module.exports = {
-    parse,
-    getType,
-    tokenizer
+    parse
 }

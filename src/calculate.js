@@ -1,5 +1,5 @@
 var parse = require('./../src/parse').parse
-const type = require('./type')
+const type = require('./type').type
 
 function calculate(rpn) {
     var result = []

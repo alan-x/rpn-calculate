@@ -40,33 +40,3 @@ describe('parse', () => {
 })
 
 
-describe('getType', () => {
-    test('getType "1" to number', () => {
-        expect(getType('1')).toEqual('number')
-    })
-    test('getType "+" to number', () => {
-        expect(getType('+')).toEqual('operation')
-    })
-    test('getType "(" to left_bracket', () => {
-        expect(getType('(')).toEqual('left_bracket')
-    })
-    test('getType ")" to right_bracket', () => {
-        expect(getType(')')).toEqual('right_bracket')
-    })
-})
-
-
-describe('tokenizer', () => {
-
-    test('tokenizer "1" to [{type:"number",value:1}]', () => {
-        expect(tokenizer('1')).toEqual([{"type": "number", "value": 1}])
-    })
-
-    test('tokenizer "+" to [{type:"operation",value:"="}]', () => {
-        expect(tokenizer('+')).toEqual([{"type": "operation", "value": "+"}])
-    })
-    test('tokenizer "(" to [{type:"operation",value:"("}]', () => {
-        expect(tokenizer('(')).toEqual([{"type": "left_bracket", "value": "("}])
-    })
-
-})
