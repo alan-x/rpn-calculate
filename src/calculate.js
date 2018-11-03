@@ -29,7 +29,6 @@ function calculate(tokens) {
         switch (token.type) {
             case type.TYPE_NUMBER: {
                 numList.push(token.value)
-                console.log(numList)
                 break
             }
             case type.TYPE_OPERATION_ADD: {
@@ -42,9 +41,6 @@ function calculate(tokens) {
                 let num1 = numList.pop()
                 let num2 = numList.pop()
                 numList.push(calOnce(num2, num1, token))
-                console.log(`${num2}${token.value}${num1}`)
-                console.log(numList)
-                break
                 break
             }
             default: {

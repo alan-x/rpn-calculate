@@ -1,11 +1,12 @@
 {
-  "name": "rpn-calculate",
+  "name": "@followwinter/rpn-calculate",
   "version": "2.0.0",
   "description": "",
   "main": "dist/bundle.js",
   "scripts": {
     "test": "jest",
-    "build": "jest&&webpack-cli --mode=production"
+    "build": "jest&&webpack-cli --mode=production",
+    "pub": "npm run build && npm publish --access=public"
   },
   "author": "",
   "license": "ISC",
