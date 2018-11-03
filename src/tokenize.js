@@ -25,7 +25,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_LEFT_BRACKET,
                     value: '(',
-                    level:3
                 })
                 continue
             }
@@ -33,7 +32,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_RIGHT_BRACKET,
                     value: ')',
-                    level:3
                 })
                 continue
             }
@@ -41,7 +39,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_OPERATION_ADD,
                     value: '+',
-                    level: 2
                 })
                 continue
             }
@@ -49,7 +46,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_OPERATION_SUB,
                     value: '-',
-                    level: 2
                 })
                 continue
             }
@@ -57,7 +53,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_OPERATION_MUL,
                     value: '*',
-                    level: 1
 
                 })
                 continue
@@ -66,7 +61,6 @@ function tokenize(input) {
                 result.push({
                     type: type.TYPE_OPERATION_DIV,
                     value: '/',
-                    level: 1
                 })
                 continue
             }

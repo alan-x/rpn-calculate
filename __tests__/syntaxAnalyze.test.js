@@ -12,19 +12,35 @@ describe('syntaxAnalyze', () => {
     })
     test('+', () => {
         let tokens = tokenize(`+`)
-        expect(syntaxAnalyze(tokens)).toBe(false)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: could not begin with +`)
+        }
     })
     test('-', () => {
         let tokens = tokenize(`-`)
-        expect(syntaxAnalyze(tokens)).toBe(false)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: could not begin with -`)
+        }
     })
     test('*', () => {
         let tokens = tokenize(`*`)
-        expect(syntaxAnalyze(tokens)).toBe(false)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: could not begin with *`)
+        }
     })
     test('/', () => {
         let tokens = tokenize(`/`)
-        expect(syntaxAnalyze(tokens)).toBe(false)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: could not begin with /`)
+        }
     })
 
     test('1+1', () => {
@@ -42,12 +58,20 @@ describe('syntaxAnalyze', () => {
 
     test('(1+1 full', () => {
         let tokens = tokenize(`(1+1`)
-        expect(syntaxAnalyze(tokens,true)).toBe(true)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: could not begin with +`)
+        }
     })
 
     test('(1++)', () => {
         let tokens = tokenize(`(1++)`)
-        expect(syntaxAnalyze(tokens)).toBe(true)
+        try {
+            syntaxAnalyze(tokens)
+        } catch (e) {
+            expect(e).toBe(`syntax error: + -> +`)
+        }
     })
 
 })
