@@ -10,19 +10,31 @@ let syntax = {
         type.TYPE_RIGHT_BRACKET
     ],
     [type.TYPE_OPERATION_ADD]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_OPERATION_SUB]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_OPERATION_MUL]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_OPERATION_DIV]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
     ],
     [type.TYPE_LEFT_BRACKET]: [
-        type.TYPE_NUMBER
+        type.TYPE_NUMBER,
+        type.TYPE_LEFT_BRACKET
+    ],
+    [type.TYPE_RIGHT_BRACKET]: [
+        type.TYPE_OPERATION_ADD,
+        type.TYPE_OPERATION_SUB,
+        type.TYPE_OPERATION_MUL,
+        type.TYPE_OPERATION_DIV,
+        type.TYPE_RIGHT_BRACKET
     ]
 }
 
@@ -46,6 +58,9 @@ function analyze(tokens, isFull = false) {
             bracketCount--
         }
         token = next
+    }
+    if (bracketCount < 0) {
+        throw `syntax error: toooooo much ) -> )`
     }
     if (isFull && bracketCount !== 0) throw `syntax error: lack of ( or )`
     return true

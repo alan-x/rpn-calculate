@@ -51,6 +51,14 @@ describe('syntaxAnalyze', () => {
         let tokens = tokenize(`(1+1)`)
         expect(syntaxAnalyze(tokens)).toBe(true)
     })
+    test('(1+1)*', () => {
+        let tokens = tokenize(`(1+1)*`)
+        expect(syntaxAnalyze(tokens)).toBe(true)
+    })
+    test('(1+1)*(', () => {
+        let tokens = tokenize(`(1+1)*(`)
+        expect(syntaxAnalyze(tokens)).toBe(true)
+    })
     test('(1+1', () => {
         let tokens = tokenize(`(1+1`)
         expect(syntaxAnalyze(tokens)).toBe(true)

@@ -95,6 +95,7 @@
 </div>
 </body>
 <script>
+
     var resultContent = document.getElementById('result')
     var result = ''
     var actionContent = document.getElementById('action')
@@ -121,7 +122,7 @@
                 // 防止第一次按的是 +-*/0.
                 if (result === '' && '+-*/0.'.indexOf(target.innerText) !== -1) break
                 try {
-                    syntaxCheckWithText(result + value)
+                    window.syntaxAnalyze(tokenize(result + value))
                     result += target.innerText
                     resultContent.innerText = result
                     appendAction(`你点击了: ${value}`)
@@ -137,7 +138,7 @@
                 if (result === '') break
                 appendAction(`你点击了: =`)
 
-                result += target.innerText + directCalculate(resultContent.innerText)
+                result += target.innerText + window.calculate(window.parse(window.tokenize(resultContent.innerText)))
                 resultContent.innerText = result
                 // 计算完了之后清空, 防止多次按=
                 result = ''
