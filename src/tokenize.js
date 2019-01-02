@@ -1,74 +1,41 @@
 const type = require('./type')
 
+const opMap = {
+    '(': type.TYPE_LEFT_BRACKET,
+    ')': type.TYPE_RIGHT_BRACKET,
+    '+': type.TYPE_OPERATION_ADD,
+    '-': type.TYPE_OPERATION_SUB,
+    '*': type.TYPE_OPERATION_MUL,
+    '/': type.TYPE_OPERATION_DIV
+}
+
 function tokenize(input) {
     let tokens = input.split('').reverse()
     let result = []
-    let lexeme
+    let token
     while (tokens.length) {
-        lexeme = tokens.pop()
-        if (lexeme.match(/[0-9]/)) {
+        token = tokens.pop()
+        if (token.match(/[0-9]/)) {
             let next = tokens.pop()
             while (next !== undefined) {
                 if (!next.match(/[0-9]/)) break
-                lexeme += next
+                token += next
                 next = tokens.pop()
             }
             result.push({
                 type: type.TYPE_NUMBER,
-                value: +lexeme
+                value: +token
             })
-            lexeme = next
+            token = next
         }
-        if (lexeme === undefined) break
-        switch (lexeme) {
-            case '(': {
-                result.push({
-                    type: type.TYPE_LEFT_BRACKET,
-                    value: '(',
-                })
-                continue
-            }
-            case ')': {
-                result.push({
-                    type: type.TYPE_RIGHT_BRACKET,
-                    value: ')',
-                })
-                continue
-            }
-            case '+': {
-                result.push({
-                    type: type.TYPE_OPERATION_ADD,
-                    value: '+',
-                })
-                continue
-            }
-            case '-': {
-                result.push({
-                    type: type.TYPE_OPERATION_SUB,
-                    value: '-',
-                })
-                continue
-            }
-            case '*': {
-                result.push({
-                    type: type.TYPE_OPERATION_MUL,
-                    value: '*',
+        if (token === undefined) break
 
-                })
-                continue
-            }
-            case '/': {
-                result.push({
-                    type: type.TYPE_OPERATION_DIV,
-                    value: '/',
-                })
-                continue
-            }
-            default: {
-                throw `error input: ${lexeme}`
-            }
-        }
-
+        let opType = opMap[token]
+        if (!opType) throw `error input: ${token}`
+        result.push({
+            type: opType,
+            value: token,
+        })
     }
     return result
 }
